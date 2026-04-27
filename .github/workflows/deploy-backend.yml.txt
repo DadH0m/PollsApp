@@ -1,0 +1,36 @@
+name: Build .NET Backend
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/PollsApi/**'
+  workflow_dispatch:
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0
+      
+      - name: Restore dependencies
+        run: dotnet restore ./backend/PollsApi
+      
+      - name: Build
+        run: dotnet build ./backend/PollsApi --configuration Release --no-restore
+      
+      - name: Publish
+        run: dotnet publish ./backend/PollsApi --configuration Release --output ./publish
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: polls-api
+          path: ./publish

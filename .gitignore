@@ -1,0 +1,15 @@
+# Visual Studio временные файлы
+.vs/
+bin/
+obj/
+Debug/
+Release/
+*.user
+*.suo
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
